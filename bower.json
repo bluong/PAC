@@ -1,5 +1,5 @@
 {
-  "name": "angular-seed",
+  "name": "palantir-anime-project",
   "description": "A starter project for AngularJS",
   "version": "0.0.0",
   "homepage": "https://github.com/angular/angular-seed",
@@ -10,6 +10,7 @@
     "angular-route": "1.2.x",
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
+    "blueprint": "ssh://git@stash.yojoe.local/bower/blueprint.git#0.2.19+version.fix",
     "html5-boilerplate": "~4.3.0"
   }
 }
