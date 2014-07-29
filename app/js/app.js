@@ -9,5 +9,5 @@ angular.module('myApp', [
   'myApp.controllers'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-    $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'MyCtrl1'});
+    $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'appController'});
 }]);

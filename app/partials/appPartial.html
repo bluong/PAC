@@ -1,67 +1,93 @@
-<div class="current-container">
-    <div>Current Showing</div>
+<div class="current-container" data-toggle="modal"
+	data-target="#myModal2">
+	<div>Currently Showing {{current_anime.img_url}}</div>
+	<img alt="{{current_anime.title}} image" src="{{current_anime.img_url}}" class="image-stuff">
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">{{current_anime.title}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="trailerURL">Trailer URL</label> <input type="url"
+						class="form-control" id="trailerURL"
+						placeholder="Enter trailer URL">
+				</div>
+				<h5>Information</h5>
+				{{current_anime.info}}
+			</div>
+		</div>
+	</div>
 </div>
 <div class="main-container">
-    <div class="announcements-container">
-        <div>Latest Announcement</div>
-    </div>
+	<div class="announcements-container">
+		<h3>Latest Announcement</h3>
+		Probably insert pictures here.<br> and then continue some of the
+		text here.
+	</div>
 </div>
 <div class="sidebar-container">
-    <div class="sidebar-element">
-        Poll
-        <form>
-            <input type="radio" name="title" value="male">Male</input><br>
-            <input type="radio" name="title" value="female">Female</input>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        <!-- Button trigger modal -->
-        <button class="btn btn-primary btn-small sidebar-button"
-            data-toggle="modal" data-target="#myModal">Submit New Entry</button>
+	<div class="sidebar-element">
+		<form name="myForm" ng-controller="appController">
+			<p>Poll</p>
+			<ul>
+				<li ng-repeat="anime in animelist"><label> <input
+						type="radio" ng-model="$parent.name" name="name"
+						value="{{anime.title}}" required /> {{anime.title}}
+				</label></li>
+			</ul>
+			<button ng-disabled="myForm.$invalid">Submit</button>
+		</form>
+		<!-- Button trigger modal -->
+		<button class="btn btn-primary btn-small sidebar-button"
+			data-toggle="modal" data-target="#myModal">Submit New Entry</button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-            aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">SUBMIT A NEW ENTRY</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="title">Title</label> <input class="form-control"
-                                    id="title" placeholder="Enter title">
-                            </div>
-                            <div class="form-group">
-                                <label for="imageURL">Image URL</label> <input type="url"
-                                    class="form-control" id="imageURL" placeholder="Enter URL">
-                            </div>
-                            <div class="form-group">
-                                <label for="trailerURL">Trailer URL</label> <input type="url"
-                                    class="form-control" id="trailerURL"
-                                    placeholder="Enter trailer URL">
-                            </div>
-                            <div class="form-group">
-                                <label for="infoLink">Information Link</label> <input type="url"
-                                    class="form-control" id="infoLink"
-                                    placeholder="Enter info link">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">SUBMIT A NEW ENTRY</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form">
+							<div class="form-group">
+								<label for="title">Title</label> <input class="form-control"
+									id="title" placeholder="Enter title">
+							</div>
+							<div class="form-group">
+								<label for="imageURL">Image URL</label> <input type="url"
+									class="form-control" id="imageURL" placeholder="Enter URL">
+							</div>
+							<div class="form-group">
+								<label for="trailerURL">Trailer URL</label> <input type="url"
+									class="form-control" id="trailerURL"
+									placeholder="Enter trailer URL">
+							</div>
+							<div class="form-group">
+								<label for="infoLink">Information Link</label> <textarea
+									class="form-control" id="infoLink"
+									placeholder="Enter info link"></textarea>
+							</div>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="sidebar-element">
-        Subscribe
-        <form role="form">
-            <div class="form-group">
-                <label for="email">Email</label> <input class="form-control"
-                    id="title" placeholder="Enter email">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-    </div>
+	<div class="sidebar-element">
+		<form role="form">
+			<div class="form-group">
+				<label for="email"> Subscribe Email</label> <input
+					class="form-control" id="title" placeholder="Enter email">
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
 </div>

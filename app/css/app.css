@@ -3,15 +3,24 @@
 .current-container {
     height: 250px;
     border-style: solid;
+    cursor: pointer;
+}
+
+.image-stuff {
+    height: 100%;
+    width: 100%;
 }
 
 .main-container {
-    float: left;
+    margin-right: 400px;
+    padding-left: 20px;
 }
 
 .sidebar-container {
-    float: right;
-    width: 200px;
+    position: absolute;
+    right: 0;
+    top: 320px;
+    width: 375px;
     background-color: gray;
     border-left-style: dotted;
 }
