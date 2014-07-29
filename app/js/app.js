@@ -9,5 +9,6 @@ angular.module('myApp', [
   'myApp.controllers'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
     $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'appController'});
 }]);
