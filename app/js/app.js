@@ -6,7 +6,8 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'myApp.controllers'
+  'myApp.controllers',
+  'firebase'
 ]).
 config(['$locationProvider', '$routeProvider', '$sceProvider', '$sceDelegateProvider', function($locationProvider, $routeProvider, $sceProvider, $sceDelegateProvider) {
     $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'appController'});

@@ -5,28 +5,31 @@
 var app = angular.module('myApp.controllers', []);
 
 
-app.controller('appController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
-    $http.get('assets/selection.json').then(function(response) {
-        if (response.status === 200 && response.data != null) {
-            $scope.animelist = response.data;
-        }
-    })
+app.controller('appController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+    $scope.announcement = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcement")).$asObject();
 
-    $http.get('assets/current.json').then(function(response) {
-        if (response.status === 200 && response.data != null) {
-            $scope.current_anime = response.data;
+    $scope.animelist = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/selection")).$asArray();
 
-            $sce.trustAsResourceUrl($scope.current_anime.trailer_url);
-        }
-    })
+    $scope.current_anime = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/current")).$asObject();
 
-    $http.get('assets/announcement.json').then(function(response) {
-        if (response.status === 200 && response.data != null) {
-            $scope.announcement = response.data;
-        }
-    })
+    $http.get('assets/test.json');
 
     $scope.alertNotSupported = function() {
         alert("Feature is not yet supported");
+    }
+
+    $scope.vote = {selected: ""};
+    $scope.updateVote = function()  {
+        var votedTitle = $scope.vote.selected;
+        if (votedTitle === "") {
+            return;
+        }
+        var updated = $scope.animelist.map(function(json) {
+            if (json.title === votedTitle) {
+                json.vote_count++;
+            }
+            return json;
+        });
+        $.post('assets/test.json', updated);
     }
 }]);

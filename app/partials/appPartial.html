@@ -25,21 +25,22 @@
 <div class="main-container">
 	<div class="announcements-container">
 		<h3>Latest Announcement</h3>
-		{{announcement}}
+		{{announcement.content}}
 	</div>
 </div>
 <div class="sidebar-container">
 	<div class="sidebar-element">
+		<p>Poll</p>
 		<form name="myForm" ng-controller="appController"
-			ng-submit="alertNotSupported()">
-			<p>Poll</p>
+			ng-submit="updateVote()">
 			<ul>
 				<li ng-repeat="anime in animelist"><label> <input
-						type="radio" ng-model="$parent.name" name="name"
-						value="{{anime.title}}" required /> {{anime.title}}
+						type="radio" ng-model="vote.selected" name="title"
+						value="{{anime.title}}" /> {{anime.title}}
 				</label></li>
 			</ul>
-			<button ng-disabled="myForm.$invalid">Submit</button>
+
+            <button>Save</button>
 		</form>
 		<!-- Button trigger modal -->
 		<button class="btn btn-primary btn-small sidebar-button"
