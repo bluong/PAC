@@ -1,7 +1,7 @@
 /* app css stylesheet */
-
 .current-container {
-    height: 250px;
+    position: relative;
+    height: 325px;
     border-style: solid;
     cursor: pointer;
 }
@@ -19,7 +19,7 @@
 .sidebar-container {
     position: absolute;
     right: 0;
-    top: 320px;
+    top: 395px;
     width: 375px;
     background-color: gray;
     border-left-style: dotted;
@@ -31,4 +31,16 @@
 
 .sidebar-element {
     border-bottom-style: dotted;
+}
+
+.picture-title {
+    position: absolute;
+    bottom: -10px;
+    left: 0px;
+    color: white;
+    font: bold 24px/45px Helvetica, Sans-Serif;
+    letter-spacing: -1px;
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
 }

@@ -1,7 +1,10 @@
 <div class="current-container" data-toggle="modal"
 	data-target="#myModal2">
-	<div>Currently Showing {{current_anime.img_url}}</div>
-	<img alt="{{current_anime.title}} image" src="{{current_anime.img_url}}" class="image-stuff">
+	<h2 class="picture-title">
+		<span>{{current_anime.title}}</span>
+	</h2>
+	<img alt="{{current_anime.title}} image"
+		src="{{current_anime.img_url}}" class="image-stuff">
 </div>
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -11,12 +14,9 @@
 				<h4 class="modal-title" id="myModalLabel">{{current_anime.title}}</h4>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-					<label for="trailerURL">Trailer URL</label> <input type="url"
-						class="form-control" id="trailerURL"
-						placeholder="Enter trailer URL">
-				</div>
-				<h5>Information</h5>
+				<h4>Trailer URL</h4>
+				<a target="_blank" href="{{current_anime.trailer_url}}">{{current_anime.trailer_url}}</a>
+				<h4>Show Information</h4>
 				{{current_anime.info}}
 			</div>
 		</div>
@@ -25,13 +25,13 @@
 <div class="main-container">
 	<div class="announcements-container">
 		<h3>Latest Announcement</h3>
-		Probably insert pictures here.<br> and then continue some of the
-		text here.
+		{{announcement}}
 	</div>
 </div>
 <div class="sidebar-container">
 	<div class="sidebar-element">
-		<form name="myForm" ng-controller="appController">
+		<form name="myForm" ng-controller="appController"
+			ng-submit="alertNotSupported()">
 			<p>Poll</p>
 			<ul>
 				<li ng-repeat="anime in animelist"><label> <input
@@ -43,10 +43,11 @@
 		</form>
 		<!-- Button trigger modal -->
 		<button class="btn btn-primary btn-small sidebar-button"
-			data-toggle="modal" data-target="#myModal">Submit New Entry</button>
+			data-toggle="modal" data-target="#submitModal">Submit New
+			Entry</button>
 
 		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -54,7 +55,7 @@
 						<h4 class="modal-title" id="myModalLabel">SUBMIT A NEW ENTRY</h4>
 					</div>
 					<div class="modal-body">
-						<form role="form">
+						<form role="form" ng-submit="alertNotSupported()">
 							<div class="form-group">
 								<label for="title">Title</label> <input class="form-control"
 									id="title" placeholder="Enter title">
@@ -69,8 +70,8 @@
 									placeholder="Enter trailer URL">
 							</div>
 							<div class="form-group">
-								<label for="infoLink">Information Link</label> <textarea
-									class="form-control" id="infoLink"
+								<label for="infoLink">Show Information</label>
+								<textarea class="form-control" id="infoLink"
 									placeholder="Enter info link"></textarea>
 							</div>
 							<button type="submit" class="btn btn-default">Submit</button>
@@ -82,7 +83,7 @@
 	</div>
 
 	<div class="sidebar-element">
-		<form role="form">
+		<form role="form" ng-submit="alertNotSupported()">
 			<div class="form-group">
 				<label for="email"> Subscribe Email</label> <input
 					class="form-control" id="title" placeholder="Enter email">
