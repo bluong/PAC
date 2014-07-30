@@ -24,12 +24,13 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
         if (votedTitle === "") {
             return;
         }
-        var updated = $scope.animelist.map(function(json) {
-            if (json.title === votedTitle) {
-                json.vote_count++;
+        for (var i = 0; i < $scope.animelist.length; i++) {
+            if ($scope.animelist[i].title === votedTitle) {
+                $scope.animelist[i].vote_count++;
+                $scope.animelist.$save(i);
             }
-            return json;
-        });
-        $.post('assets/test.json', updated);
+        }
+        alert("Vote has been recorded");
+        $('input[name=title]').attr('checked',false);
     }
 }]);
