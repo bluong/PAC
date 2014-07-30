@@ -30,7 +30,7 @@
 </div>
 <div class="sidebar-container">
 	<div class="sidebar-element">
-		<p>Poll</p>
+		<p>Next Showing Survey</p>
 		<form name="myForm" ng-controller="appController"
 			ng-submit="updateVote()">
 			<ul>
@@ -40,13 +40,14 @@
 				</label></li>
 			</ul>
 
-            <button>Save</button>
+            <button class="btn btn-default">Submit vote</button>
 		</form>
+</div>
+<div class="sidebar-element">
 		<!-- Button trigger modal -->
 		<button class="btn btn-primary btn-small sidebar-button"
 			data-toggle="modal" data-target="#submitModal">Submit New
 			Entry</button>
-
 		<!-- Modal -->
 		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,24 +57,24 @@
 						<h4 class="modal-title" id="myModalLabel">SUBMIT A NEW ENTRY</h4>
 					</div>
 					<div class="modal-body">
-						<form role="form" ng-submit="alertNotSupported()">
+						<form role="form" ng-submit="addToLibrary()" ng-controller="appController">
 							<div class="form-group">
 								<label for="title">Title</label> <input class="form-control"
-									id="title" placeholder="Enter title">
+									id="title" placeholder="Enter title" ng-model="newAnime.title" required>
 							</div>
 							<div class="form-group">
 								<label for="imageURL">Image URL</label> <input type="url"
-									class="form-control" id="imageURL" placeholder="Enter URL">
+									class="form-control" id="imageURL" placeholder="Enter URL" ng-model="newAnime.img_url" >
 							</div>
 							<div class="form-group">
 								<label for="trailerURL">Trailer URL</label> <input type="url"
 									class="form-control" id="trailerURL"
-									placeholder="Enter trailer URL">
+									placeholder="Enter trailer URL" ng-model="newAnime.trailer_url" >
 							</div>
 							<div class="form-group">
 								<label for="infoLink">Show Information</label>
 								<textarea class="form-control" id="infoLink"
-									placeholder="Enter info link"></textarea>
+									placeholder="Enter info link" ng-model="newAnime.info" ></textarea>
 							</div>
 							<button type="submit" class="btn btn-default">Submit</button>
 						</form>
@@ -84,10 +85,10 @@
 	</div>
 
 	<div class="sidebar-element">
-		<form role="form" ng-submit="alertNotSupported()">
+		<form role="form" ng-controller="appController" ng-submit="addEmail()">
 			<div class="form-group">
 				<label for="email"> Subscribe Email</label> <input
-					class="form-control" id="title" placeholder="Enter email">
+					class="form-control" ng-model="email" placeholder="Enter email" name="email">
 			</div>
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>

@@ -6,13 +6,15 @@ var app = angular.module('myApp.controllers', []);
 
 
 app.controller('appController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+    var emailListRef = new Firebase("https://plntr-anime-project.firebaseio.com/emails");
+    var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
+    var defaultLibraryMap = {info: "", trailer_url: "", vote_count: 0, img_url: "", watched: false};
+
     $scope.announcement = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcement")).$asObject();
 
     $scope.animelist = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/selection")).$asArray();
 
     $scope.current_anime = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/current")).$asObject();
-
-    $http.get('assets/test.json');
 
     $scope.alertNotSupported = function() {
         alert("Feature is not yet supported");
@@ -27,10 +29,55 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
         for (var i = 0; i < $scope.animelist.length; i++) {
             if ($scope.animelist[i].title === votedTitle) {
                 $scope.animelist[i].vote_count++;
+                $scope.animelist[i].$priority = vote_count;
                 $scope.animelist.$save(i);
             }
         }
         alert("Vote has been recorded");
         $('input[name=title]').attr('checked',false);
+    }
+
+    $scope.addEmail = function() {
+        var email = $scope.email;
+        if (email == null) {
+            return;
+        }
+        var emailList = $firebase(emailListRef).$asArray();
+        emailList.$loaded().then(function() {
+            if (emailList.some(function(emailEntry) {
+                return emailEntry.email === email;
+            })) {
+                alert("Email already exists");
+                $('input[name=email]').val("");
+                return;
+            }
+            emailList.$add({email: email});
+            $('input[name=email]').val("");
+            alert("Email added");
+        });
+    }
+
+    $scope.addToLibrary = function() {
+        var newAnime = $scope.newAnime;
+        if (newAnime.title == null) {
+            return;
+        }
+        angular.forEach(defaultLibraryMap, function(value, key) {
+            if (newAnime[key] == null) {
+                newAnime[key] = value;
+            }
+        });
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            if (library.some(function(libraryEntry) {
+                return libraryEntry.title === newAnime.title;
+            })) {
+                alert("Title already exists");
+                return;
+            }
+            library.$add(newAnime);
+            $('#submitModal').modal('hide')
+            $('#submitModal').find('input').val("");
+        });
     }
 }]);
