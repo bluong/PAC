@@ -1,3 +1,11 @@
+<h3 class="entries-header">
+	Entries
+	<button type="button" class="btn btn-default" data-toggle="modal"
+		data-target="#submitModal">
+		<span class="glyphicon glyphicon-plus"></span>
+	</button>
+</h3>
+
 <table class="table table-hover entry-table">
 	<thead>
 		<tr>
@@ -23,6 +31,43 @@
 				<youtube code=selected_entry.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{selected_entry.info}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">SUBMIT A NEW ENTRY</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" ng-submit="addToLibrary()"
+					ng-controller="entriesController">
+					<div class="form-group">
+						<label for="title">Title</label> <input class="form-control"
+							id="title" placeholder="Enter title" ng-model="newAnime.title"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="imageURL">Image URL</label> <input type="url"
+							class="form-control" id="imageURL" placeholder="Enter URL"
+							ng-model="newAnime.img_url">
+					</div>
+					<div class="form-group">
+						<label for="trailerURL">Trailer URL</label> <input type="url"
+							class="form-control" id="trailerURL"
+							placeholder="Enter trailer URL" ng-model="newAnime.trailer_url">
+					</div>
+					<div class="form-group">
+						<label for="infoLink">Show Information</label>
+						<textarea class="form-control" id="infoLink"
+							placeholder="Enter info link" ng-model="newAnime.info"></textarea>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
 			</div>
 		</div>
 	</div>

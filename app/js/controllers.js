@@ -87,38 +87,38 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
 }]).
 controller('entriesController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
-//    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
-//    $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
-//
-//    $scope.addToLibrary = function() {
-//        var newAnime = $scope.newAnime;
-//        if (newAnime.title == null) {
-//            return;
-//        }
-//        angular.forEach(defaultLibraryMap, function(value, key) {
-//            if (newAnime[key] == null) {
-//                newAnime[key] = value;
-//            }
-//        });
-//
-//        if (newAnime.trailer_url != null) {
-//            newAnime.trailer_code = parseVideoId(newAnime.trailer_url);
-//            delete newAnime.trailer_url
-//        }
-//
-//        var library = $firebase(libraryRef).$asArray();
-//        library.$loaded().then(function() {
-//            if (library.some(function(libraryEntry) {
-//                return libraryEntry.title === newAnime.title;
-//            })) {
-//                alert("Title already exists");
-//                return;
-//            }
-//            library.$add(newAnime);
-//            $('#submitModal').modal('hide')
-//            $('#submitModal').find('input').val("");
-//        });
-//    }
+    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+    $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
+
+    $scope.addToLibrary = function() {
+        var newAnime = $scope.newAnime;
+        if (newAnime.title == null) {
+            return;
+        }
+        angular.forEach(defaultLibraryMap, function(value, key) {
+            if (newAnime[key] == null) {
+                newAnime[key] = value;
+            }
+        });
+
+        if (newAnime.trailer_url != null) {
+            newAnime.trailer_code = parseVideoId(newAnime.trailer_url);
+            delete newAnime.trailer_url
+        }
+
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            if (library.some(function(libraryEntry) {
+                return libraryEntry.title === newAnime.title;
+            })) {
+                alert("Title already exists");
+                return;
+            }
+            library.$add(newAnime);
+            $('#submitModal').modal('hide')
+            $('#submitModal').find('input').val("");
+        });
+    }
     $scope.entries = $firebase(libraryRef).$asArray();
     $scope.openViewModal = function(entry) {
         $scope.selected_entry = entry;
@@ -133,4 +133,8 @@ function parseVideoId(youtubeURL) {
       video_id = video_id.substring(0, ampersandPosition);
     }
     return video_id;
+}
+
+function addToLibrary() {
+
 }
