@@ -123,7 +123,7 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
     }
     $scope.openEditModal = function(entry) {
         $scope.selected_entry = entry;
-        $('#editModal').find('#image_url').val(entry.image_url);
+        $('#editModal').find('#image_url').val(entry.img_url);
         $('#editModal').find('#title').val(entry.title);
         $('#editModal').find('#infoLink').val(entry.info);
         $('#editModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
