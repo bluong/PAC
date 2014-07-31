@@ -11,5 +11,6 @@ angular.module('myApp', [
 ]).
 config(['$locationProvider', '$routeProvider', '$sceProvider', '$sceDelegateProvider', function($locationProvider, $routeProvider, $sceProvider, $sceDelegateProvider) {
     $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'appController'});
+    $routeProvider.when('/entries', {templateUrl: 'partials/entriesPartial.html', controller: 'entriesController'});
     $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://www.youtube.com**', "www.youtube-nocookie.com**"]);
 }]);

@@ -1,0 +1,13 @@
+<table class="table table-hover entry-table">
+	<thead>
+		<tr>
+			<th>Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="entry in entries" data-toggle="modal"
+			data-target="#myModal2">
+			<td>{{entry.title}}</td>
+		</tr>
+	</tbody>
+</table>

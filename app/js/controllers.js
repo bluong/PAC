@@ -4,7 +4,6 @@
 
 var app = angular.module('myApp.controllers', []);
 
-
 app.controller('appController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var emailListRef = new Firebase("https://plntr-anime-project.firebaseio.com/emails");
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
@@ -85,13 +84,49 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
             $('#submitModal').find('input').val("");
         });
     }
-
-    function parseVideoId(youtubeURL) {
-        var video_id = youtubeURL.split('v=')[1];
-        var ampersandPosition = video_id.indexOf('&');
-        if(ampersandPosition != -1) {
-          video_id = video_id.substring(0, ampersandPosition);
-        }
-        return video_id;
-    }
+}]).
+controller('entriesController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+    var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
+//    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+//    $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
+//
+//    $scope.addToLibrary = function() {
+//        var newAnime = $scope.newAnime;
+//        if (newAnime.title == null) {
+//            return;
+//        }
+//        angular.forEach(defaultLibraryMap, function(value, key) {
+//            if (newAnime[key] == null) {
+//                newAnime[key] = value;
+//            }
+//        });
+//
+//        if (newAnime.trailer_url != null) {
+//            newAnime.trailer_code = parseVideoId(newAnime.trailer_url);
+//            delete newAnime.trailer_url
+//        }
+//
+//        var library = $firebase(libraryRef).$asArray();
+//        library.$loaded().then(function() {
+//            if (library.some(function(libraryEntry) {
+//                return libraryEntry.title === newAnime.title;
+//            })) {
+//                alert("Title already exists");
+//                return;
+//            }
+//            library.$add(newAnime);
+//            $('#submitModal').modal('hide')
+//            $('#submitModal').find('input').val("");
+//        });
+//    }
+    $scope.entries = $firebase(libraryRef).$asArray();
 }]);
+
+function parseVideoId(youtubeURL) {
+    var video_id = youtubeURL.split('v=')[1];
+    var ampersandPosition = video_id.indexOf('&');
+    if(ampersandPosition != -1) {
+      video_id = video_id.substring(0, ampersandPosition);
+    }
+    return video_id;
+}
