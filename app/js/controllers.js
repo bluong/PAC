@@ -120,6 +120,10 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
 //        });
 //    }
     $scope.entries = $firebase(libraryRef).$asArray();
+    $scope.openViewModal = function(entry) {
+        $scope.selected_entry = entry;
+        $('#myModal2').modal('show');
+    }
 }]);
 
 function parseVideoId(youtubeURL) {
