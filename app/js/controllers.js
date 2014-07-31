@@ -9,6 +9,7 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
     var emailListRef = new Firebase("https://plntr-anime-project.firebaseio.com/emails");
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
     var defaultLibraryMap = {info: "", trailer_url: "", vote_count: 0, img_url: "", watched: false};
+    $sce.trustAsResourceUrl("http://www.youtube.com/embed/**")
 
     $scope.announcement = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcement")).$asObject();
 
@@ -19,6 +20,8 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
     $scope.alertNotSupported = function() {
         alert("Feature is not yet supported");
     }
+
+    $scope.code = $scope.current_anime.trailer_code;
 
     $scope.vote = {selected: ""};
     $scope.updateVote = function()  {
