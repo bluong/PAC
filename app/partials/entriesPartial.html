@@ -13,13 +13,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="entry in entries" ng-click="openViewModal(entry)">
+		<tr ng-repeat="entry in entries" ng-click="openEditModal(entry)">
 			<td>{{entry.title}}</td>
+			<td align="right">
+				<button type="button" class="btn btn-default">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -71,4 +76,41 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">EDIT EXISTING ENTRY</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" ng-submit="editLibraryEntry(editedAnime, selected_entry)"
+                    ng-controller="entriesController">
+                    <div class="form-group">
+                        <label for="title">Title</label> <input class="form-control"
+                            id="title" placeholder="Enter title" ng-model="editedAnime.title"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageURL">Image URL</label> <input type="url"
+                            class="form-control" id="image_url" placeholder="Enter URL"
+                            ng-model="editedAnime.img_url">
+                    </div>
+                    <div class="form-group">
+                        <label for="trailerURL">Trailer URL</label> <input type="url"
+                            class="form-control" id="trailer_url"
+                            placeholder="Enter trailer URL" ng-model="editedAnime.trailer_url">
+                    </div>
+                    <div class="form-group">
+                        <label for="infoLink">Show Information</label>
+                        <textarea class="form-control" id="infoLink"
+                            placeholder="Enter info link" ng-model="editedAnime.info"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

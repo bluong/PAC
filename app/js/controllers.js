@@ -92,9 +92,6 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
 
     $scope.addToLibrary = function() {
         var newAnime = $scope.newAnime;
-        if (newAnime.title == null) {
-            return;
-        }
         angular.forEach(defaultLibraryMap, function(value, key) {
             if (newAnime[key] == null) {
                 newAnime[key] = value;
@@ -122,7 +119,46 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
     $scope.entries = $firebase(libraryRef).$asArray();
     $scope.openViewModal = function(entry) {
         $scope.selected_entry = entry;
-        $('#myModal2').modal('show');
+        $('#viewModal').modal('show');
+    }
+    $scope.openEditModal = function(entry) {
+        $scope.selected_entry = entry;
+        $('#editModal').find('#image_url').val(entry.image_url);
+        $('#editModal').find('#title').val(entry.title);
+        $('#editModal').find('#infoLink').val(entry.info);
+        $('#editModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        $('#editModal').modal('show');
+    }
+    $scope.editLibraryEntry = function(entry, selected_entry) {
+        angular.forEach(selected_entry, function(value, key) {
+            if (entry[key] == null) {
+                entry[key] = value;
+            }
+        });
+
+        if (entry.trailer_url != null) {
+            entry.trailer_code = parseVideoId(entry.trailer_url);
+            delete entry.trailer_url
+        }
+
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            if (library.some(function(libraryEntry) {
+                return (libraryEntry.title === entry.title) && (entry.title !== selected_entry.title);
+            })) {
+                alert("Title already exists");
+                return;
+            }
+            for (var i = 0; i < library.length; i++) {
+                if (library[i].$id === entry.$id) {
+                    library[i] = entry;
+                    library.$save(i);
+                }
+            }
+            $('#editModal').modal('hide')
+            $('#editModal').find('input').val("");
+            $('#editModal').find('#infoLink').val(entry.info);
+        });
     }
 }]);
 
