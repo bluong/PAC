@@ -58,3 +58,7 @@
 .entries-header {
     margin-left: 150px;
 }
+
+textarea.info-textarea {
+    height: 150px;
+}
