@@ -165,6 +165,58 @@ controller('announcementsController', ['$scope', '$http', '$firebase', function(
     $scope.announcements = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcements")).$asArray();
     window.wut = $scope.announcements;
 
+}]).
+controller('watchedController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+    var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
+    var watchedRef = new Firebase("https://plntr-anime-project.firebaseio.com/watched");
+    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+    $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
+
+    $scope.entries = $firebase(libraryRef).$asArray();
+    $scope.openWatchedViewModal = function(entry) {
+        $scope.selected_entry = entry;
+        $('#viewWatchedModal').modal('show');
+    }
+    $scope.openWatchedEditModal = function(entry) {
+        $scope.selected_entry = entry;
+        $('#editWatchedModal').find('#image_url').val(entry.img_url);
+        $('#editWatchedModal').find('#title').val(entry.title);
+        $('#editWatchedModal').find('#infoLink').val(entry.info);
+        $('#editWatchedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        $('#editWatchedModal').modal('show');
+    }
+    $scope.editWatchedLibraryEntry = function(entry, selected_entry) {
+        angular.forEach(selected_entry, function(value, key) {
+            if (entry[key] == null) {
+                entry[key] = value;
+            }
+        });
+
+        if (entry.trailer_url != null) {
+            entry.trailer_code = parseVideoId(entry.trailer_url);
+            delete entry.trailer_url
+        }
+
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            if (library.some(function(libraryEntry) {
+                return (libraryEntry.title === entry.title) && (entry.title !== selected_entry.title);
+            })) {
+                alert("Title already exists");
+                return;
+            }
+            for (var i = 0; i < library.length; i++) {
+                if (library[i].$id === entry.$id) {
+                    library[i] = entry;
+                    library.$save(i);
+                }
+            }
+            console.log("hi");
+            $('#editWatchedModal').modal('hide')
+            $('#editWatchedModal').find('input').val("");
+            $('#editWatchedModal').find('#infoLink').val(entry.info);
+        });
+    }
 }]);
 
 function parseVideoId(youtubeURL) {
