@@ -49,16 +49,22 @@
     padding: 10px;
 }
 
-.entry-table {
+.table-container {
     margin-left: auto;
     margin-right: auto;
     width: 80%;
 }
 
-.entries-header {
+.table-title {
     margin-left: 150px;
 }
 
 textarea.info-textarea {
     height: 150px;
+}
+
+.date-cell {
+    width: 170px;
+    margin-left: auto;
+    margin-right: auto;
 }

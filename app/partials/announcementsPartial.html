@@ -1,0 +1,18 @@
+<h3 class="table-title">
+	Past Announcements
+</h3>
+
+<table class="table table-hover table-container">
+	<thead>
+		<tr>
+			<th>Content</th>
+			<th>Post Time</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="announcement in announcements | orderBy: 'post_time':true">
+			<td>{{announcement.content}}</td>
+			<td width="170px">{{announcement.post_time}}</td>
+		</tr>
+	</tbody>
+</table>

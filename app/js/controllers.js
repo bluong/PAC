@@ -160,6 +160,11 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
             $('#editModal').find('#infoLink').val(entry.info);
         });
     }
+}]).
+controller('announcementsController', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
+    $scope.announcements = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcements")).$asArray();
+    window.wut = $scope.announcements;
+
 }]);
 
 function parseVideoId(youtubeURL) {
