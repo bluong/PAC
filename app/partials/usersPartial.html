@@ -15,7 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="user in users"">
+		<tr ng-repeat="user in users | orderBy:'tagname' | startFrom:currentPage*pageSize | limitTo:pageSize"">
 			<td>{{user.tagname}}</td>
 			<td>{{user.name}}</td>
 			<td><a target="_blank" href={{user.malLink}}>{{user.malLink}}</a></td>
@@ -28,6 +28,14 @@
 		</tr>
 	</tbody>
 </table>
+
+<div class="table-container">
+    <button ng-disabled="currentPage == 0"
+        ng-click="currentPage=currentPage-1" class="btn btn-default">Previous</button>
+    {{currentPage+1}}/{{numberOfUserPages()}}
+    <button ng-disabled="currentPage >= users.length/pageSize - 1"
+        ng-click="currentPage=currentPage+1" class="btn btn-default">Next</button>
+</div>
 
 <div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">

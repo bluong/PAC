@@ -16,19 +16,30 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="entry in entries | orderBy:'title'">
+		<tr
+			ng-repeat="entry in entries | orderBy:'title' | startFrom:currentPage*pageSize | limitTo:pageSize">
 			<td ng-click="openViewModal(entry)">{{entry.title}}</td>
-            <td>{{entry.start_date}}</td>
-            <td>{{entry.finish_date}}</td>
-            <td class="table-cell-center"><div ng-if="entry.first_watched" class="glyphicon glyphicon-ok"></div></td>
+			<td ng-click="openViewModal(entry)">{{entry.start_date}}</td>
+			<td ng-click="openViewModal(entry)">{{entry.finish_date}}</td>
+			<td ng-click="openViewModal(entry)" class="table-cell-center"><div
+					ng-if="entry.first_watched" class="glyphicon glyphicon-ok"></div></td>
 			<td align="right" class="table-cell-center">
-				<button type="button" class="btn btn-default" ng-click="openEditModal(entry)">
+				<button type="button" class="btn btn-default"
+					ng-click="openEditModal(entry)">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
+
+<div class="table-container">
+	<button ng-disabled="currentPage == 0"
+		ng-click="currentPage=currentPage-1" class="btn btn-default">Previous</button>
+	{{currentPage+1}}/{{numberOfPages()}}
+	<button ng-disabled="currentPage >= entries.length/pageSize - 1"
+		ng-click="currentPage=currentPage+1" class="btn btn-default">Next</button>
+</div>
 
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -39,9 +50,17 @@
 			</div>
 			<div class="modal-body">
 				<h4>Trailer URL</h4>
-				<youtube ng-if="selected_entry.trailer_code" code=selected_entry.trailer_code></youtube>
+				<youtube ng-if="selected_entry.trailer_code"
+					code=selected_entry.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{selected_entry.info}}
+				<h4>Start Date {{selected_entry.start_date}}</h4>
+				<h4>Finish Date {{selected_entry.end_date}}</h4>
+				<h4>
+					First episode watched?
+					<div ng-if="selected_entry.first_watched"
+						class="glyphicon glyphicon-ok"></div>
+				</h4>
 			</div>
 		</div>
 	</div>
@@ -85,38 +104,40 @@
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">EDIT EXISTING ENTRY</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" ng-submit="editLibraryEntry(editedAnime, selected_entry)"
-                    ng-controller="entriesController">
-                    <div class="form-group">
-                        <label for="title">Title</label> <input class="form-control"
-                            id="title" placeholder="Enter title" ng-model="editedAnime.title"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="imageURL">Image URL</label> <input type="url"
-                            class="form-control" id="image_url" placeholder="Enter URL"
-                            ng-model="editedAnime.img_url">
-                    </div>
-                    <div class="form-group">
-                        <label for="trailerURL">Trailer URL</label> <input type="url"
-                            class="form-control" id="trailer_url"
-                            placeholder="Enter trailer URL" ng-model="editedAnime.trailer_url">
-                    </div>
-                    <div class="form-group">
-                        <label for="infoLink">Show Information</label>
-                        <textarea class="info-textarea form-control" id="infoLink"
-                            placeholder="Enter info link" ng-model="editedAnime.info"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">EDIT EXISTING ENTRY</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form"
+					ng-submit="editLibraryEntry(editedAnime, selected_entry)"
+					ng-controller="entriesController">
+					<div class="form-group">
+						<label for="title">Title</label> <input class="form-control"
+							id="title" placeholder="Enter title" ng-model="editedAnime.title"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="imageURL">Image URL</label> <input type="url"
+							class="form-control" id="image_url" placeholder="Enter URL"
+							ng-model="editedAnime.img_url">
+					</div>
+					<div class="form-group">
+						<label for="trailerURL">Trailer URL</label> <input type="url"
+							class="form-control" id="trailer_url"
+							placeholder="Enter trailer URL"
+							ng-model="editedAnime.trailer_url">
+					</div>
+					<div class="form-group">
+						<label for="infoLink">Show Information</label>
+						<textarea class="info-textarea form-control" id="infoLink"
+							placeholder="Enter info link" ng-model="editedAnime.info"></textarea>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>

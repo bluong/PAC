@@ -10,9 +10,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="announcement in announcements | orderBy: 'post_time':true">
+		<tr ng-repeat="announcement in announcements | orderBy: 'post_time':true | startFrom:currentPage*pageSize | limitTo:pageSize">
 			<td>{{announcement.content}}</td>
 			<td width="170px">{{announcement.post_time}}</td>
 		</tr>
 	</tbody>
 </table>
+
+<div class="table-container">
+    <button ng-disabled="currentPage == 0"
+        ng-click="currentPage=currentPage-1" class="btn btn-default">Previous</button>
+    {{currentPage+1}}/{{numberOfAnnouncementPages()}}
+    <button ng-disabled="currentPage >= announcements.length/pageSize - 1"
+        ng-click="currentPage=currentPage+1" class="btn btn-default">Next</button>
+</div>

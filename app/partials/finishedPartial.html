@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="entry in entries | filter:{finished: true} | orderBy:'finish_date'">
+		<tr ng-repeat="entry in entries | filter:{finished: true} | orderBy:'finish_date' | startFrom:currentPage*pageSize | limitTo:pageSize">
             <td ng-click="openfinishedViewModal(entry)">{{entry.title}}</td>
             <td>{{entry.start_date}}</td>
             <td>{{entry.finish_date}}</td>
@@ -23,6 +23,14 @@
         </tr>
 	</tbody>
 </table>
+
+<div class="table-container">
+    <button ng-disabled="currentPage == 0"
+        ng-click="currentPage=currentPage-1" class="btn btn-default">Previous</button>
+    {{currentPage+1}}/{{numberOfFilteredPages()}}
+    <button ng-disabled="currentPage >= (entries|filter:{finished: true}).length/pageSize - 1"
+        ng-click="currentPage=currentPage+1" class="btn btn-default">Next</button>
+</div>
 
 <div class="modal fade" id="viewfinishedModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
@@ -36,6 +44,8 @@
 				<youtube ng-if="selected_entry.trailer_code" code=selected_entry.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{selected_entry.info}}
+				<h4>Start Date {{selected_entry.start_date}}</h4>
+                <h4>Finish Date {{selected_entry.end_date}}</h4>
 			</div>
 		</div>
 	</div>

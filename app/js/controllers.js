@@ -3,6 +3,7 @@
 /* Controllers */
 
 var app = angular.module('myApp.controllers', []);
+var pageSize = 10;
 
 app.controller('appController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var emailListRef = new Firebase("https://plntr-anime-project.firebaseio.com/emails");
@@ -89,6 +90,8 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
     var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", finished: false};
     $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
+    $scope.pageSize = 10;
+    $scope.currentPage = 0;
 
     $scope.addToLibrary = function() {
         var newAnime = $scope.newAnime;
@@ -117,6 +120,10 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
         });
     }
     $scope.entries = $firebase(libraryRef).$asArray();
+
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.entries.length/$scope.pageSize);
+    }
     $scope.openViewModal = function(entry) {
         $scope.selected_entry = entry;
         $('#viewModal').modal('show');
@@ -167,15 +174,30 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
 }]).
 controller('announcementsController', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
     $scope.announcements = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcements")).$asArray();
-    window.wut = $scope.announcements;
+    $scope.pageSize = pageSize;
+    $scope.currentPage = 0;
+    $scope.numberOfAnnouncementPages=function(){
+        return Math.ceil($scope.announcements.length/$scope.pageSize);
+    }
 
 }]).
 controller('finishedController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
     var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", finished: false};
+
+    $scope.pageSize = 10;
+    $scope.currentPage = 0;
     $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
 
     $scope.entries = $firebase(libraryRef).$asArray();
+
+
+    $scope.numberOfFilteredPages=function(){
+        var finishedEntries = $scope.entries.filter(function(entry) {
+            return entry["finished"];
+        })
+        return Math.ceil(finishedEntries.length/$scope.pageSize);
+    }
     $scope.openfinishedViewModal = function(entry) {
         $scope.selected_entry = entry;
         $('#viewfinishedModal').modal('show');
@@ -228,6 +250,8 @@ controller('finishedController', ['$scope', '$http', '$sce', '$firebase', functi
 controller('usersController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var usersRef = new Firebase("https://plntr-anime-project.firebaseio.com/users");
     var defaultLibraryMap = {name: "", malLink: ""};
+    $scope.pageSize = pageSize;
+    $scope.currentPage = 0;
 
     $scope.addToUsers = function() {
         var newUser = $scope.newUser;
@@ -245,6 +269,9 @@ controller('usersController', ['$scope', '$http', '$sce', '$firebase', function(
         });
     }
     $scope.users = $firebase(usersRef).$asArray();
+    $scope.numberOfUserPages=function(){
+        return Math.ceil($scope.users.length/$scope.pageSize);
+    }
 
     $scope.openEditModal = function(user) {
         $scope.selected_user = user;
