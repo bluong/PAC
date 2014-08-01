@@ -33,7 +33,7 @@
 			</div>
 			<div class="modal-body">
 				<h4>Trailer URL</h4>
-				<youtube code=selected_entry.trailer_code></youtube>
+				<youtube ng-if="selected_entry.trailer_code" code=selected_entry.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{selected_entry.info}}
 			</div>

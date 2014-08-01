@@ -16,7 +16,7 @@
 			</div>
 			<div class="modal-body">
 				<h4>Trailer URL</h4>
-				<youtube code=current_anime.trailer_code></youtube>
+				<youtube  ng-if="current_anime.trailer_code" code=current_anime.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{current_anime.info}}
 			</div>
