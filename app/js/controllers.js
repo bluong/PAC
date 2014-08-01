@@ -182,7 +182,9 @@ controller('watchedController', ['$scope', '$http', '$sce', '$firebase', functio
         $('#editWatchedModal').find('#image_url').val(entry.img_url);
         $('#editWatchedModal').find('#title').val(entry.title);
         $('#editWatchedModal').find('#infoLink').val(entry.info);
-        $('#editWatchedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        if (entry.trailer_code !== "") {
+            $('#editWatchedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        }
         $('#editWatchedModal').modal('show');
     }
     $scope.editWatchedLibraryEntry = function(entry, selected_entry) {
