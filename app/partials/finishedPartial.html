@@ -1,18 +1,22 @@
 <h3 class="table-title">
-	Already Watched Entries
+	Already finished Entries
 </h3>
 
 <table class="table table-hover table-container">
 	<thead>
 		<tr>
 			<th>Title</th>
+            <th>Start Date</th>
+            <th>Finish Date</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="entry in entries | filter:{watched: true}">
-            <td ng-click="openWatchedViewModal(entry)">{{entry.title}}</td>
+		<tr ng-repeat="entry in entries | filter:{finished: true} | orderBy:'finish_date'">
+            <td ng-click="openfinishedViewModal(entry)">{{entry.title}}</td>
+            <td>{{entry.start_date}}</td>
+            <td>{{entry.finish_date}}</td>
             <td align="right">
-                <button type="button" class="btn btn-default" ng-click="openWatchedEditModal(entry)">
+                <button type="button" class="btn btn-default" ng-click="openfinishedEditModal(entry)">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </td>
@@ -20,7 +24,7 @@
 	</tbody>
 </table>
 
-<div class="modal fade" id="viewWatchedModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="viewfinishedModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -37,7 +41,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="editWatchedModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="editfinishedModal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -45,7 +49,7 @@
                 <h4 class="modal-title" id="myModalLabel">EDIT EXISTING ENTRY</h4>
             </div>
             <div class="modal-body">
-                <form role="form" ng-submit="editWatchedLibraryEntry(editedAnime, selected_entry)"
+                <form role="form" ng-submit="editfinishedLibraryEntry(editedAnime, selected_entry)"
                     ng-controller="entriesController">
                     <div class="form-group">
                         <label for="title">Title</label> <input class="form-control"

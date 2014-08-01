@@ -1,0 +1,93 @@
+<h3 class="table-title">
+	Users
+	<button type="button" class="btn btn-default" data-toggle="modal"
+		data-target="#submitModal">
+		<span class="glyphicon glyphicon-plus"></span>
+	</button>
+</h3>
+
+<table class="table table-hover table-container">
+	<thead>
+		<tr>
+			<th>Tagname</th>
+			<th>Name</th>
+			<th>MyAnimeList Profile Link</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users"">
+			<td>{{user.tagname}}</td>
+			<td>{{user.name}}</td>
+			<td><a target="_blank" href={{user.malLink}}>{{user.malLink}}</a></td>
+			<td align="right">
+				<button type="button" class="btn btn-default"
+					ng-click="openEditModal(user)">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">REGISTER</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" ng-submit="addToUsers()"
+					ng-controller="usersController">
+					<div class="form-group">
+						<label for="tagname">Tagname</label> <input class="form-control"
+							id="tagname" placeholder="Enter Tagname"
+							ng-model="newUser.tagname" required>
+					</div>
+					<div class="form-group">
+						<label for="name">Name</label> <input class="form-control"
+							id="name" placeholder="Enter Name" ng-model="newUser.name">
+					</div>
+					<div class="form-group">
+						<label for="malLink">MyAnimeList Link</label> <input type="url"
+							class="form-control" id="malLink"
+							placeholder="Enter MyAnimeList Profile Link" ng-model="newUser.malLink">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">EDIT USER</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form"
+					ng-submit="editUsersEntry(editedUser, selected_user)"
+					ng-controller="usersController">
+					<div class="form-group">
+						<label for="tagname">Tagname</label> <input class="form-control"
+							id="tagname" placeholder="Enter Tagname" ng-model="editedUser.title"
+							required>
+					</div>
+					<div class="form-group">
+                        <label for="name">Name</label> <input class="form-control"
+                            id="name" placeholder="Enter Name" ng-model="editedUser.name">
+                    </div>
+                    <div class="form-group">
+                        <label for="malLink">MyAnimeList Link</label> <input type="url"
+                            class="form-control" id="malLink"
+                            placeholder="Enter MyAnimeList Profile Link" ng-model="editedUser.malLink">
+                    </div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

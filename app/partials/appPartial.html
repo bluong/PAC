@@ -37,7 +37,7 @@
 		<form name="myForm" ng-controller="appController"
 			ng-submit="updateVote()">
 			<ul>
-				<li ng-repeat="anime in animelist"><label> <input
+				<li ng-repeat="anime in animelist | filter:{selected: true}""><label> <input
 						type="radio" ng-model="vote.selected" name="title"
 						value="{{anime.title}}" /> {{anime.title}}
 				</label></li>

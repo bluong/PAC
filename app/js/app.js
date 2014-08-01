@@ -13,6 +13,7 @@ config(['$locationProvider', '$routeProvider', '$sceProvider', '$sceDelegateProv
     $routeProvider.when('/', {templateUrl: 'partials/appPartial.html', controller: 'appController'});
     $routeProvider.when('/entries', {templateUrl: 'partials/entriesPartial.html', controller: 'entriesController'});
     $routeProvider.when('/announcements', {templateUrl: 'partials/announcementsPartial.html', controller: 'announcementsController'});
-    $routeProvider.when('/watched', {templateUrl: 'partials/watchedPartial.html', controller: 'watchedController'});
+    $routeProvider.when('/finished', {templateUrl: 'partials/finishedPartial.html', controller: 'finishedController'});
+    $routeProvider.when('/users', {templateUrl: 'partials/usersPartial.html', controller: 'usersController'});
     $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://www.youtube.com**']);
 }]);

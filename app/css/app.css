@@ -68,3 +68,7 @@ textarea.info-textarea {
     margin-left: auto;
     margin-right: auto;
 }
+
+.table-cell-center {
+    text-align: center;
+}

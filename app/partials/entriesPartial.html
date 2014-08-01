@@ -10,12 +10,18 @@
 	<thead>
 		<tr>
 			<th>Title</th>
+			<th>Start Date</th>
+			<th>Finish Date</th>
+			<th class="table-cell-center">First Episode Watched?</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="entry in entries"">
+		<tr ng-repeat="entry in entries | orderBy:'title'">
 			<td ng-click="openViewModal(entry)">{{entry.title}}</td>
-			<td align="right">
+            <td>{{entry.start_date}}</td>
+            <td>{{entry.finish_date}}</td>
+            <td class="table-cell-center"><div ng-if="entry.first_watched" class="glyphicon glyphicon-ok"></div></td>
+			<td align="right" class="table-cell-center">
 				<button type="button" class="btn btn-default" ng-click="openEditModal(entry)">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>

@@ -7,12 +7,12 @@ var app = angular.module('myApp.controllers', []);
 app.controller('appController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var emailListRef = new Firebase("https://plntr-anime-project.firebaseio.com/emails");
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
-    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", finished: false};
     $sce.trustAsResourceUrl("http://www.youtube.com/embed/**")
 
     $scope.announcement = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/announcement")).$asObject();
 
-    $scope.animelist = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/selection")).$asArray();
+    $scope.animelist = $firebase(libraryRef).$asArray();
 
     $scope.current_anime = $firebase(new Firebase("https://plntr-anime-project.firebaseio.com/current")).$asObject();
 
@@ -87,7 +87,7 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
 }]).
 controller('entriesController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
-    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", finished: false};
     $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
 
     $scope.addToLibrary = function() {
@@ -170,30 +170,29 @@ controller('announcementsController', ['$scope', '$http', '$firebase', function(
     window.wut = $scope.announcements;
 
 }]).
-controller('watchedController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+controller('finishedController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
     var libraryRef = new Firebase("https://plntr-anime-project.firebaseio.com/library");
-    var watchedRef = new Firebase("https://plntr-anime-project.firebaseio.com/watched");
-    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", watched: false};
+    var defaultLibraryMap = {info: "", trailer_code: "", vote_count: 0, img_url: "", finished: false};
     $sce.trustAsResourceUrl("http://www.youtube.com/embed/**");
 
     $scope.entries = $firebase(libraryRef).$asArray();
-    $scope.openWatchedViewModal = function(entry) {
+    $scope.openfinishedViewModal = function(entry) {
         $scope.selected_entry = entry;
-        $('#viewWatchedModal').modal('show');
+        $('#viewfinishedModal').modal('show');
     }
-    $scope.openWatchedEditModal = function(entry) {
+    $scope.openfinishedEditModal = function(entry) {
         $scope.selected_entry = entry;
-        $('#editWatchedModal').find('#image_url').val(entry.img_url);
-        $('#editWatchedModal').find('#title').val(entry.title);
-        $('#editWatchedModal').find('#infoLink').val(entry.info);
+        $('#editfinishedModal').find('#image_url').val(entry.img_url);
+        $('#editfinishedModal').find('#title').val(entry.title);
+        $('#editfinishedModal').find('#infoLink').val(entry.info);
         if (entry.trailer_code != null && entry.trailer_code != "") {
-            $('#editWatchedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+            $('#editfinishedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
         } else {
-            $('#editWatchedModal').find('#trailer_url').val("");
+            $('#editfinishedModal').find('#trailer_url').val("");
         }
-        $('#editWatchedModal').modal('show');
+        $('#editfinishedModal').modal('show');
     }
-    $scope.editWatchedLibraryEntry = function(entry, selected_entry) {
+    $scope.editfinishedLibraryEntry = function(entry, selected_entry) {
         angular.forEach(selected_entry, function(value, key) {
             if (entry[key] == null) {
                 entry[key] = value;
@@ -220,9 +219,58 @@ controller('watchedController', ['$scope', '$http', '$sce', '$firebase', functio
                 }
             }
             console.log("hi");
-            $('#editWatchedModal').modal('hide')
-            $('#editWatchedModal').find('input').val("");
-            $('#editWatchedModal').find('#infoLink').val(entry.info);
+            $('#editfinishedModal').modal('hide')
+            $('#editfinishedModal').find('input').val("");
+            $('#editfinishedModal').find('#infoLink').val(entry.info);
+        });
+    }
+}]).
+controller('usersController', ['$scope', '$http', '$sce', '$firebase', function($scope, $http, $sce, $firebase) {
+    var usersRef = new Firebase("https://plntr-anime-project.firebaseio.com/users");
+    var defaultLibraryMap = {name: "", malLink: ""};
+
+    $scope.addToUsers = function() {
+        var newUser = $scope.newUser;
+        angular.forEach(defaultLibraryMap, function(value, key) {
+            if (newUser[key] == null) {
+                newUser[key] = value;
+            }
+        });
+
+        var users = $firebase(usersRef).$asArray();
+        users.$loaded().then(function() {
+            users.$add(newUser);
+            $('#submitModal').modal('hide')
+            $('#submitModal').find('input').val("");
+        });
+    }
+    $scope.users = $firebase(usersRef).$asArray();
+
+    $scope.openEditModal = function(user) {
+        $scope.selected_user = user;
+        $('#editModal').find('#tagname').val(user.tagname);
+        $('#editModal').find('#name').val(user.name);
+        $('#editModal').find('#malLink').val(user.malLink);
+        $('#editModal').modal('show');
+    }
+
+    $scope.editUsersEntry = function(entry, selected_entry) {
+        angular.forEach(selected_entry, function(value, key) {
+            if (entry[key] == null) {
+                entry[key] = value;
+            }
+        });
+
+        var users = $firebase(usersRef).$asArray();
+        users.$loaded().then(function() {
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].$id === entry.$id) {
+                    users[i] = entry;
+                    users.$save(i);
+                }
+            }
+            $('#editModal').modal('hide');
+            $('#editModal').find('input').val("");
         });
     }
 }]);
@@ -234,8 +282,4 @@ function parseVideoId(youtubeURL) {
       video_id = video_id.substring(0, ampersandPosition);
     }
     return video_id;
-}
-
-function addToLibrary() {
-
 }
