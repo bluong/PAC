@@ -126,7 +126,11 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
         $('#editModal').find('#image_url').val(entry.img_url);
         $('#editModal').find('#title').val(entry.title);
         $('#editModal').find('#infoLink').val(entry.info);
-        $('#editModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        if (entry.trailer_code != null && entry.trailer_code != "") {
+            $('#editModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        } else {
+            $('#editModal').find('#trailer_url').val("");
+        }
         $('#editModal').modal('show');
     }
     $scope.editLibraryEntry = function(entry, selected_entry) {
@@ -182,8 +186,10 @@ controller('watchedController', ['$scope', '$http', '$sce', '$firebase', functio
         $('#editWatchedModal').find('#image_url').val(entry.img_url);
         $('#editWatchedModal').find('#title').val(entry.title);
         $('#editWatchedModal').find('#infoLink').val(entry.info);
-        if (entry.trailer_code !== "") {
+        if (entry.trailer_code != null && entry.trailer_code != "") {
             $('#editWatchedModal').find('#trailer_url').val("http://www.youtube.com/watch?v=" + entry.trailer_code);
+        } else {
+            $('#editWatchedModal').find('#trailer_url').val("");
         }
         $('#editWatchedModal').modal('show');
     }
