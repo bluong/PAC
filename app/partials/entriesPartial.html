@@ -1,7 +1,6 @@
 <h3 class="table-title">
 	Entries
-	<button type="button" class="btn btn-default" data-toggle="modal"
-		data-target="#submitModal">
+	<button type="button" class="btn btn-default" ng-click="openNewModal()">
 		<span class="glyphicon glyphicon-plus"></span>
 	</button>
 </h3>
@@ -49,7 +48,7 @@
 				<h4 class="modal-title" id="myModalLabel">{{selected_entry.title}}</h4>
 			</div>
 			<div class="modal-body">
-				<h4>Trailer URL</h4>
+				<h4>Youtube Trailer</h4>
 				<youtube ng-if="selected_entry.trailer_code"
 					code=selected_entry.trailer_code></youtube>
 				<h4>Show Information</h4>
@@ -79,7 +78,7 @@
 					<div class="form-group">
 						<label for="title">Title</label> <input class="form-control"
 							id="title" placeholder="Enter title" ng-model="newAnime.title"
-							required>
+							required> <span ng-show='newAnime.title != null'>Did you mean {{checkLibrary}}?  It is already inputted</span>
 					</div>
 					<div class="form-group">
 						<label for="imageURL">Image URL</label> <input type="url"

@@ -15,8 +15,9 @@
 				<h4 class="modal-title" id="myModalLabel">{{current_anime.title}}</h4>
 			</div>
 			<div class="modal-body">
-				<h4>Trailer URL</h4>
-				<youtube  ng-if="current_anime.trailer_code" code=current_anime.trailer_code></youtube>
+				<h4>Youtube Trailer</h4>
+				<youtube ng-if="current_anime.trailer_code"
+					code=current_anime.trailer_code></youtube>
 				<h4>Show Information</h4>
 				{{current_anime.info}}
 			</div>
@@ -37,8 +38,8 @@
 		<form name="myForm" ng-controller="appController"
 			ng-submit="updateVote()">
 			<ul>
-				<li ng-repeat="anime in animelist | filter:{selected: true}""><label> <input
-						type="radio" ng-model="vote.selected" name="title"
+				<li ng-repeat="anime in animelist | filter:{selected: true}""><label>
+						<input type="radio" ng-model="vote.selected" name="title"
 						value="{{anime.title}}" /> {{anime.title}}
 				</label></li>
 			</ul>
@@ -66,7 +67,7 @@
 							<div class="form-group">
 								<label for="title">Title</label> <input class="form-control"
 									id="title" placeholder="Enter title" ng-model="newAnime.title"
-									required>
+									required> <span ng-show='newAnime.title != null'>Did you mean {{checkLibrary}}?  It is already inputted</span>
 							</div>
 							<div class="form-group">
 								<label for="imageURL">Image URL</label> <input type="url"

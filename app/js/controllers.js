@@ -19,6 +19,24 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
 
     $scope.code = $scope.current_anime.trailer_code;
 
+    $scope.$watch("newAnime.title", function() {
+        if ($scope.newAnime == null || $scope.newAnime.title == null) {
+            return;
+        }
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            for (var i = 0; i < library.length; i++) {
+                if (library[i].title.toLowerCase().indexOf($scope.newAnime.title.toLowerCase()) === 0) {
+                    $scope.checkLibrary = library[i].title;
+                    return;
+                }
+            }
+            $scope.checkLibrary = "";
+        });
+    })
+
+    $scope.checkLibrary = "";
+
     $scope.vote = {selected: ""};
     $scope.updateVote = function()  {
         var votedTitle = $scope.vote.selected;
@@ -121,12 +139,33 @@ controller('entriesController', ['$scope', '$http', '$sce', '$firebase', functio
     }
     $scope.entries = $firebase(libraryRef).$asArray();
 
+
+
+    $scope.$watch("newAnime.title", function() {
+        if ($scope.newAnime == null || $scope.newAnime.title == null) {
+            return;
+        }
+        var library = $firebase(libraryRef).$asArray();
+        library.$loaded().then(function() {
+            for (var i = 0; i < library.length; i++) {
+                if (library[i].title.toLowerCase().indexOf($scope.newAnime.title.toLowerCase()) === 0) {
+                    $scope.checkLibrary = library[i].title;
+                    return;
+                }
+            }
+            $scope.checkLibrary = "";
+        });
+    })
+
     $scope.numberOfPages=function(){
         return Math.ceil($scope.entries.length/$scope.pageSize);
     }
     $scope.openViewModal = function(entry) {
         $scope.selected_entry = entry;
         $('#viewModal').modal('show');
+    }
+    $scope.openNewModal = function() {
+        $('#submitModal').modal('show');
     }
     $scope.openEditModal = function(entry) {
         $scope.selected_entry = entry;
@@ -252,6 +291,9 @@ controller('usersController', ['$scope', '$http', '$sce', '$firebase', function(
     var defaultLibraryMap = {name: "", malLink: ""};
     $scope.pageSize = pageSize;
     $scope.currentPage = 0;
+    $scope.openNewModal = function() {
+        $('#submitModal').modal('show');
+    }
 
     $scope.addToUsers = function() {
         var newUser = $scope.newUser;
