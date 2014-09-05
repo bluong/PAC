@@ -46,7 +46,6 @@ app.controller('appController', ['$scope', '$http', '$sce', '$firebase', functio
         for (var i = 0; i < $scope.animelist.length; i++) {
             if ($scope.animelist[i].title === votedTitle) {
                 $scope.animelist[i].vote_count++;
-                $scope.animelist[i].$priority = vote_count;
                 $scope.animelist.$save(i);
             }
         }
