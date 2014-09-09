@@ -1,7 +1,7 @@
 /* app css stylesheet */
 .current-container {
     position: relative;
-    height: 325px;
+    height: 600px;
     border-style: solid;
     cursor: pointer;
     background-color: black
@@ -23,7 +23,7 @@
 .sidebar-container {
     position: absolute;
     right: 0;
-    top: 395px;
+    top: 670px;
     width: 375px;
     background-color: gray;
     border-left-style: dotted;
